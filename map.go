@@ -7,6 +7,7 @@ import (
 )
 
 func getArea(url string) ([]NamedURL, error) {
+
 	res, err := http.Get(url)
 
 	if err != nil {
