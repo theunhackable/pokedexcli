@@ -33,7 +33,11 @@ func StartRepl(config *models.Config) {
 		command, exists := commands[clean[0]]
 
 		if exists {
+			if len(clean) == 2 {
+				config.Param = &clean[1]
+			}
 			err := command.Callback(config)
+			config.Param = nil
 			if err != nil {
 				fmt.Println(err)
 			}

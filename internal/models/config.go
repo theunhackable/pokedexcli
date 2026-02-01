@@ -6,4 +6,5 @@ type Config struct {
 	NextUrl  *string
 	PrevUrl  *string
 	ApiCache *cache.Cache
+	Param    *string
 }
