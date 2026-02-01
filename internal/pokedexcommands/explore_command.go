@@ -7,9 +7,9 @@ import (
 	api "github.com/theunhackable/pokedexcli/internal/pokedexapi"
 )
 
-func getPokemonsInArea(url string) ([]string, error) {
+func getPokemonsInArea(url string, config *models.Config) ([]string, error) {
 
-	res, err := api.GetResponse[models.PokemonInArea](url)
+	res, err := api.GetResponse[models.PokemonInArea](url, config)
 	if err != nil {
 		return nil, err
 	}
@@ -25,7 +25,7 @@ func commandExplore(config *models.Config) error {
 		return fmt.Errorf("Invalid params")
 	}
 	url := "https://pokeapi.co/api/v2/location-area/" + *config.Param
-	pokemons, err := getPokemonsInArea(url)
+	pokemons, err := getPokemonsInArea(url, config)
 
 	if err != nil {
 		return err

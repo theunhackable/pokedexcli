@@ -11,7 +11,7 @@ func getMap(config *models.Config) ([]models.Results, error) {
 	if config.NextUrl == nil {
 		return nil, fmt.Errorf("Your'e on the last page")
 	}
-	response, err := api.GetResponse[models.AreaResponse](*config.NextUrl)
+	response, err := api.GetResponse[models.AreaResponse](*config.NextUrl, config)
 	if err != nil {
 		return nil, err
 	}

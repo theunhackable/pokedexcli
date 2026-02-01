@@ -3,11 +3,22 @@ package pokedexapi
 import (
 	"encoding/json"
 	"fmt"
+	"io"
 	"net/http"
+
+	"github.com/theunhackable/pokedexcli/internal/models"
 )
 
-func GetResponse[T any](url string) (T, error) {
+func GetResponse[T any](url string, config *models.Config) (T, error) {
 	var response T
+	if config == nil {
+		return response, fmt.Errorf("No configuration is provided.")
+	}
+
+	if val, ok := config.ApiCache.Get(url); ok {
+		err := json.Unmarshal(val, &response)
+		return response, err
+	}
 
 	res, err := http.Get(url)
 	if err != nil {
@@ -20,9 +31,15 @@ func GetResponse[T any](url string) (T, error) {
 		return response, fmt.Errorf("returned status %d", res.StatusCode)
 	}
 
-	decoder := json.NewDecoder(res.Body)
-	if err := decoder.Decode(&response); err != nil {
-		return response, fmt.Errorf("Error while decoding the body %w", err)
+	body, err := io.ReadAll(res.Body)
+
+	if err != nil {
+		return response, err
 	}
-	return response, nil
+
+	config.ApiCache.Add(url, body)
+
+	err = json.Unmarshal(body, &response)
+
+	return response, err
 }

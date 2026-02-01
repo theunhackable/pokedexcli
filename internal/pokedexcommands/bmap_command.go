@@ -11,7 +11,7 @@ func getBMap(config *models.Config) ([]models.Results, error) {
 	if config.PrevUrl == nil {
 		return nil, fmt.Errorf("You're on the first page")
 	}
-	response, err := api.GetResponse[models.AreaResponse](*config.PrevUrl)
+	response, err := api.GetResponse[models.AreaResponse](*config.PrevUrl, config)
 
 	if err != nil {
 		return nil, err
