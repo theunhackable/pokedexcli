@@ -1,4 +1,4 @@
-package pokecache
+package pokedexcache
 
 import (
 	"sync"
@@ -17,20 +17,22 @@ type CacheMethods interface {
 }
 
 type Cache struct {
-	data map[string]cacheEntry
-	mu   *sync.RWMutex
+	Data map[string]cacheEntry
+	Mu   *sync.RWMutex
 }
 
 func (this *Cache) Get(key string) ([]byte, bool) {
-	this.mu.RLock()
-	defer this.mu.RUnlock()
+	this.Mu.RLock()
+	defer this.Mu.RUnlock()
 
-	x, ok := this.data[key]
+	x, ok := this.Data[key]
 	return x.Val, ok
 }
 
 func (this *Cache) Add(key string, val []byte) {
-	this.data[key] = cacheEntry{
+	this.Mu.Lock()
+	defer this.Mu.Unlock()
+	this.Data[key] = cacheEntry{
 		Val:       val,
 		CreatedAt: time.Now(),
 	}
@@ -43,23 +45,22 @@ func (this *Cache) reapLoop(interval time.Duration) {
 	defer ticker.Stop()
 
 	for range ticker.C {
-		this.mu.Lock()
-		ttl := time.Now().Add(-interval)
+		this.Mu.Lock()
 
-		for key, entry := range this.data {
-			if ttl.After(entry.CreatedAt) {
-				delete(this.data, key)
+		for key, entry := range this.Data {
+			if time.Since(entry.CreatedAt) > interval {
+				delete(this.Data, key)
 			}
 		}
-		this.mu.Unlock()
+		this.Mu.Unlock()
 	}
 }
 
 func NewCache(interval time.Duration) *Cache {
 
 	cache := &Cache{
-		data: make(map[string]cacheEntry),
-		mu:   &sync.RWMutex{},
+		Data: make(map[string]cacheEntry),
+		Mu:   &sync.RWMutex{},
 	}
 	go cache.reapLoop(interval)
 	return cache

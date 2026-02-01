@@ -1,10 +1,13 @@
-package main
+package pokedexclient
 
 import (
 	"bufio"
 	"fmt"
 	"os"
 	"strings"
+
+	"github.com/theunhackable/pokedexcli/internal/models"
+	cmd "github.com/theunhackable/pokedexcli/internal/pokedexcommands"
 )
 
 func cleanInput(text string) []string {
@@ -14,7 +17,7 @@ func cleanInput(text string) []string {
 	return splited
 }
 
-func startRepl() {
+func StartRepl(config *models.Config) {
 
 	scanner := bufio.NewScanner(os.Stdin)
 	for {
@@ -26,11 +29,11 @@ func startRepl() {
 		}
 		clean := cleanInput(inp)
 
-		commands := getCommands()
+		commands := cmd.GetCommands()
 		command, exists := commands[clean[0]]
 
 		if exists {
-			err := command.callback()
+			err := command.Callback(config)
 			if err != nil {
 				fmt.Println(err)
 			}
