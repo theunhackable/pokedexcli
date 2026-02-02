@@ -29,13 +29,16 @@ func GetCommands() map[string]models.CLICommand {
 			Description: "Inpect details of caught pokemon.",
 			Callback:    commandInspect,
 		},
-
+		"pokedex": {
+			Name:        "pokedex",
+			Description: "List all the captured pokemons.",
+			Callback:    commandPokedex,
+		},
 		"help": {
 			Name:        "help",
 			Description: "Displays a help message",
 			Callback:    commandHelp,
 		},
-
 		"exit": {
 			Name:        "exit",
 			Description: "Exit the Pokedex",

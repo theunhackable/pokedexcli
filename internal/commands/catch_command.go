@@ -35,6 +35,7 @@ func commandCatch(config *models.Config) error {
 		fmt.Printf("%s was caught!\n", name)
 
 		config.Pokemons[name] = res
+		fmt.Println("You may now inspect it with the inspect command.")
 
 	} else {
 		fmt.Printf("%s escaped!\n", name)
