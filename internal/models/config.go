@@ -1,10 +1,11 @@
 package models
 
-import cache "github.com/theunhackable/pokedexcli/internal/pokedexcache"
+import "github.com/theunhackable/pokedexcli/internal/cache"
 
 type Config struct {
 	NextUrl  *string
 	PrevUrl  *string
 	ApiCache *cache.Cache
 	Param    *string
+	Pokemons map[string]PokemonNameResponse
 }

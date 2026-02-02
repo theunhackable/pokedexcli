@@ -1,4 +1,4 @@
-package pokedexclient
+package client
 
 import "testing"
 

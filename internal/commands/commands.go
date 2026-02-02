@@ -1,4 +1,4 @@
-package pokedexcommands
+package commands
 
 import "github.com/theunhackable/pokedexcli/internal/models"
 
@@ -18,6 +18,16 @@ func GetCommands() map[string]models.CLICommand {
 			Name:        "explore",
 			Description: "See the pokemons in the area.",
 			Callback:    commandExplore,
+		},
+		"catch": {
+			Name:        "catch",
+			Description: "Catch a pokemon.",
+			Callback:    commandCatch,
+		},
+		"inspect": {
+			Name:        "inspect",
+			Description: "Inpect details of caught pokemon.",
+			Callback:    commandInspect,
 		},
 
 		"help": {

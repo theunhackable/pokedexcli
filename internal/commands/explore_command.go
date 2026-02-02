@@ -1,10 +1,10 @@
-package pokedexcommands
+package commands
 
 import (
 	"fmt"
 
+	"github.com/theunhackable/pokedexcli/internal/api"
 	"github.com/theunhackable/pokedexcli/internal/models"
-	api "github.com/theunhackable/pokedexcli/internal/pokedexapi"
 )
 
 func getPokemonsInArea(url string, config *models.Config) ([]string, error) {

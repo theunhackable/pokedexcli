@@ -1,4 +1,4 @@
-package pokedexclient
+package client
 
 import (
 	"bufio"
@@ -6,8 +6,8 @@ import (
 	"os"
 	"strings"
 
+	cmd "github.com/theunhackable/pokedexcli/internal/commands"
 	"github.com/theunhackable/pokedexcli/internal/models"
-	cmd "github.com/theunhackable/pokedexcli/internal/pokedexcommands"
 )
 
 func cleanInput(text string) []string {

@@ -1,10 +1,9 @@
-package pokedexcommands
+package commands
 
 import (
 	"fmt"
-
-	models "github.com/theunhackable/pokedexcli/internal/models"
-	api "github.com/theunhackable/pokedexcli/internal/pokedexapi"
+	"github.com/theunhackable/pokedexcli/internal/api"
+	"github.com/theunhackable/pokedexcli/internal/models"
 )
 
 func getBMap(config *models.Config) ([]models.Results, error) {

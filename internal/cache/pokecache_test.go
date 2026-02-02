@@ -1,4 +1,4 @@
-package pokedexcache
+package cache
 
 import (
 	"fmt"
