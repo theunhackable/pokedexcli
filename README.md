@@ -30,7 +30,7 @@ Ensure you have [Go](https://go.dev/dl/) installed on your machine.
 
 1. Clone the repository:
    ```bash
-   git clone [https://github.com/theunhackable/pokedexcli.git](https://github.com/theunhackable/pokedexcli.git)
+   git clone https://github.com/theunhackable/pokedexcli.git
    cd pokedexcli
 
 2. Build the project:
@@ -59,11 +59,8 @@ go build -o pokedex
 
 MIT
 
-```
-
 ### **Suggestions**
 1.  **Persistence:** Save the `caught` map to a local `.json` file so you don't lose your Pokemon when you close the app.
 2.  **Visuals:** Use a library like `fatih/color` to give the CLI colored text (e.g., Red for fire types, Blue for water).
 3.  **Tests:** Add a `pokecache_test.go` file to prove your cache reaping logic actually works!
 
-```
