@@ -1,36 +1,3 @@
-This is a review and documentation for your **Pokedex CLI** project, a common milestone in the Boot.dev Go curriculum. Since the repository link might be private or newly created, I have based this on the standard architecture required by the Boot.dev "Build a Pokedex in Go" project.
-
-### **Code Review & Feedback**
-
-Based on the typical Boot.dev implementation for this project, here is a breakdown of what makes this code "clean" and where the common pitfalls are:
-
-1. **REPL Pattern:** * **The Good:** Using a `bufio.Scanner` within a `for` loop is the idiomatic way to handle user input in Go. It’s memory-efficient and handles EOF (like `Ctrl+D`) gracefully.
-* **Pro-tip:** Ensure your "cleaner" function (that splits input into words) handles multiple spaces or leading/trailing whitespace using `strings.Fields`.
-
-
-2. **The PokeAPI Cache (Critical):**
-* **The Good:** The core of this project is the custom `pokecache` package. It uses a `sync.Mutex` to prevent race conditions during concurrent read/writes (especially during the `reapLoop`).
-* **Pro-tip:** Check that your `reapLoop` is started as a goroutine inside the `NewCache` constructor. If you forget the `go` keyword, the application will hang on startup!
-
-
-3. **JSON Handling:**
-* **The Good:** Using `json.Unmarshal` with structs that have exact tags (e.g., ``json:"name"``) is correct.
-* **Improvement:** For better performance, some advanced solutions use `json.NewDecoder(resp.Body).Decode(&target)`. This avoids reading the entire response into memory before parsing.
-
-
-4. **Error Handling:**
-* **The Good:** Go is all about explicit error checking. Every `http.Get` and `json.Unmarshal` should be checked.
-* **Pro-tip:** Don't just `fmt.Println(err)`. Provide context, like `fmt.Errorf("error fetching locations: %w", err)`.
-
-
-
----
-
-### **README.md Template**
-
-Copy and paste this into your project. It’s designed to look professional for your portfolio.
-
-```markdown
 # Pokedex CLI
 
 A command-line interface (CLI) tool built in **Go** that allows you to explore the Pokémon world, catch Pokémon, and view your collection. This project was built as part of the [Boot.dev](https://www.boot.dev) backend development track.
@@ -65,8 +32,6 @@ Ensure you have [Go](https://go.dev/dl/) installed on your machine.
    ```bash
    git clone [https://github.com/theunhackable/pokedexcli.git](https://github.com/theunhackable/pokedexcli.git)
    cd pokedexcli
-
-```
 
 2. Build the project:
 ```bash
